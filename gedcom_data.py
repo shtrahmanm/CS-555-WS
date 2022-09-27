@@ -16,7 +16,6 @@ if not (my_file.is_file()):
 file1 = open(sys.argv[1], 'r')
 Lines = file1.readlines() 
 file1 = open("Output.txt","w")
-Families.field_names = ["ID", "Married", "Divorced", "Husband ID", "Husband Name", "Wife ID", "Wife Name", "Children"]
 #lists of individual data
 idi = []
 Name = []
@@ -88,12 +87,23 @@ for line in Lines:
         Divorced.append("N/A")
         Children.append("N/A")
     if (marry):
-        file1.write("yo")
         Married[len(Married)-1] = line.strip()[length:]
         marry=0
     if (tag=="MARR"):
         marry=1
-
+    if (divorce):
+        Divorced[len(Divorced)-1] = line.strip()[length:]
+        divorce=0
+    if (tag=="DIV"):
+        divorce=1
+    if (tag=="HUSB"):
+        Husband_ID.append(line.strip()[length:])
+        Husband_Name.append(Name[idi.index(Husband_ID[len(Husband_ID)-1])])
+    if (tag=="WIFE"):
+        Wife_ID.append(line.strip()[length:])
+        Wife_Name.append(Name[idi.index(Wife_ID[len(Wife_ID)-1])])
+    if (tag=="CHIL"):
+        Children[len(Children)-1] = line.strip()[length:]
 #Adding to Individuals Table
 Individuals.add_column("ID", idi)
 Individuals.add_column("Name", Name)
@@ -107,12 +117,12 @@ Individuals.add_column("Spouse", Spouse)
 #Adding to Families Table
 Families.add_column("ID", idf)
 Families.add_column("Married", Married)
-# Families.add_column("Divorced", Divorced)
-# Families.add_column("Husband ID", Husband_ID)
-# Families.add_column("Husband Name", Husband_Name)
-# Families.add_column("Wife ID", Wife_ID)
-# Families.add_column("Wife Name", Wife_Name)
-# Families.add_column("Children", Children)
+Families.add_column("Divorced", Divorced)
+Families.add_column("Husband ID", Husband_ID)
+Families.add_column("Husband Name", Husband_Name)
+Families.add_column("Wife ID", Wife_ID)
+Families.add_column("Wife Name", Wife_Name)
+Families.add_column("Children", Children)
 
 #Write tables to Output.txt
 file1.write("Individuals\n")
