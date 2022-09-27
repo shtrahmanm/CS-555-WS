@@ -1,5 +1,11 @@
+from ast import Div
+from distutils.debug import DEBUG
 import sys
 from pathlib import Path
+from telnetlib import SE
+from prettytable import PrettyTable
+Individuals = PrettyTable()
+Families = PrettyTable()
 valid_tags={"INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM", "MARR", "HUSB", "WIFE", "CHIL",
  "DIV", "DATE", "HEAD", "TRLR", "NOTE"}
 if (len(sys.argv)!=2 ):
@@ -10,6 +16,30 @@ if not (my_file.is_file()):
 file1 = open(sys.argv[1], 'r')
 Lines = file1.readlines() 
 file1 = open("Output.txt","w")
+Families.field_names = ["ID", "Married", "Divorced", "Husband ID", "Husband Name", "Wife ID", "Wife Name", "Children"]
+#lists of individual data
+idi = []
+Name = []
+Gender = []
+Birthday = []
+Age = []
+Alive = []
+Death = []
+Child = []
+Spouse = []
+idf = []
+Married = []
+Divorced = []
+Husband_ID = []
+Husband_Name = []
+Wife_ID = []
+Wife_Name = []
+Children = []
+#Temp variable to tell if DATE tag is for birth or death date
+birth = 0
+death = 0
+marry=0
+divorce=0
 for line in Lines:
     words = line.strip().split()
     level = words[0]
@@ -18,15 +48,75 @@ for line in Lines:
     valid ='N'
     length = len(level)+len(tag)+2
     if(tag in valid_tags):
-        valid = 'Y'
-    
+        valid = 'Y'   
     if((valid=='N' and len(words)>2) and words[2] in valid_tags):
         id=words[1]
         valid = 'Y'
         tag=words[2]
-        file1.write("--> {}\n".format(line.strip()))
-        file1.write("<-- {}|{}|{}|{}\n".format(level, tag, valid, id))
-    else:
-        file1.write("--> {}\n".format(line.strip()))
-        file1.write("<-- {}|{}|{}|{}\n".format(level, tag, valid, line.strip()[length:]))
+    #Check for individual table info
+    if (tag=="INDI"):
+        idi.append(id)
+        Age.append(0)
+        Alive.append("True")
+        Death.append("N/A")
+        Child.append("N/A")
+        Spouse.append("N/A")
+    if (tag=="NAME" and level=="1"):
+        Name.append(line.strip()[length:])
+    if (tag=="SEX"):
+        Gender.append(line.strip()[length:])
+    if (tag=="BIRT"):
+        birth=1
+    if (tag=="DATE"):
+        if (birth):
+            Birthday.append(line.strip()[length:])
+            birth=0
+        if (death):
+            Death[len(Alive)-1] = line.strip()[length:]
+            death=0
+    if (tag=="DEAT"):
+        Alive[len(Alive)-1]="False"
+        death=1
+    if (tag=="FAMC"):
+        Child[len(Child)-1] = line.strip()[length:]
+    if (tag=="FAMS"):
+        Spouse[len(Spouse)-1] = line.strip()[length:]
+    #Check for Family table info
+    if (tag=="FAM"):
+        idf.append(id)
+        Married.append("N/A")
+        Divorced.append("N/A")
+        Children.append("N/A")
+    if (marry):
+        file1.write("yo")
+        Married[len(Married)-1] = line.strip()[length:]
+        marry=0
+    if (tag=="MARR"):
+        marry=1
+
+#Adding to Individuals Table
+Individuals.add_column("ID", idi)
+Individuals.add_column("Name", Name)
+Individuals.add_column("Gender", Gender)
+Individuals.add_column("Birthday", Birthday)
+Individuals.add_column("Age", Age)
+Individuals.add_column("Alive", Alive)
+Individuals.add_column("Death", Death)
+Individuals.add_column("Child", Child)
+Individuals.add_column("Spouse", Spouse)
+#Adding to Families Table
+Families.add_column("ID", idf)
+Families.add_column("Married", Married)
+# Families.add_column("Divorced", Divorced)
+# Families.add_column("Husband ID", Husband_ID)
+# Families.add_column("Husband Name", Husband_Name)
+# Families.add_column("Wife ID", Wife_ID)
+# Families.add_column("Wife Name", Wife_Name)
+# Families.add_column("Children", Children)
+
+#Write tables to Output.txt
+file1.write("Individuals\n")
+file1.write("{}\n".format(Individuals))
+file1.write("Families\n")
+file1.write("{}".format(Families))
 file1.close()
