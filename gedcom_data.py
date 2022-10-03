@@ -37,13 +37,37 @@ class Date:
     self.day = int(list[0])
     self.month = months[list[1]]
     self.year = int(list[2])
+
+def US01(date):
+    today = datetime.datetime.now()
+    if (today.year - date.year - ((today.month, today.day) <  (date.month, date.day))) < 0:
+      return True
+    else:
+      return False
+
+def US02(birthdate,marrydate):
+    if (birthdate.year - marrydate.year -
+        ((birthdate.month, birthdate.day) <
+         (marrydate.month, marrydate.day))) < 0:
+         return True
+    else:
+        return False
     
-def US03(birthdate, deathdate):
-  if ((deathdate.year - birthdate.year) - ((deathdate.month, deathdate.day) < (birthdate.month, birthdate.day))) < 0:
-    return True
-  else:
-    return False
-    
+def US05(deathdate,marrydate):
+    if (deathdate.year - marrydate.year -
+        ((deathdate.month, deathdate.day) <
+         (marrydate.month, marrydate.day))) < 0:
+         return True
+    else:
+        return False
+
+def US06(deathdate,divorcedate):
+    if (deathdate.year - divorcedate.year -
+                ((deathdate.month, deathdate.day) <
+                (divorcedate.month, divorcedate.day))) < 0:
+         return True
+    else:
+        return False
 
 #lists of individual data
 idi = []
@@ -68,7 +92,7 @@ Wife_Name = []
 Children = []
 
 #list of user stores
-lst_US03 = []
+US03 = []
 
 
 #Begin iterating line by line
@@ -131,7 +155,7 @@ def parseFile(File):
                                         (month, day))) < 0):
             Age[len(Alive) - 1] = deathdate.year - year - (
               (deathdate.month, deathdate.day) < (month, day))
-            lst_US03.append("Error US03: Birthdate of " + Name[len(Alive) - 1] +
+            US03.append("Error US03: Birthdate of " + Name[len(Alive) - 1] +
                         "(" + idi[len(Alive) - 1] +
                         ") occurs after his/her death.")
           else:
@@ -299,7 +323,7 @@ def main():
         #list = convertDate(Birthday[1])
         file1.write("\n{}".format(DateAfterToday))
         file1.write("\n{}".format(MarrbeforeBirth))
-        file1.write("\n{}".format(lst_US03))
+        file1.write("\n{}".format(US03))
         file1.write("\n{}".format(MarriageAfterDivorce))
         file1.write("\n{}".format(MarryAfterDeath))
         file1.write("\n{}".format(DivorcedAfterDeath))
