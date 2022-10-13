@@ -37,13 +37,49 @@ class Date:
     self.day = int(list[0])
     self.month = months[list[1]]
     self.year = int(list[2])
-    
+
+def US01(date):
+    today = datetime.datetime.now()
+    if (today.year - date.year - ((today.month, today.day) <  (date.month, date.day))) < 0:
+      return True
+    else:
+      return False
+
+def US02(birthdate,marrydate):
+    if (birthdate.year - marrydate.year -
+        ((birthdate.month, birthdate.day) <
+         (marrydate.month, marrydate.day))) < 0:
+         return True
+    else:
+        return False
+
 def US03(birthdate, deathdate):
   if ((deathdate.year - birthdate.year) - ((deathdate.month, deathdate.day) < (birthdate.month, birthdate.day))) < 0:
     return True
   else:
     return False
+
+def US04(marrydate, divorcedate):
+  if ((divorcedate.year - marrydate.year) - ((divorcedate.month, divorcedate.day) < (marrydate.month, marrydate.day))) < 0:
+    return True
+  else:
+    return False
     
+def US05(deathdate,marrydate):
+    if (deathdate.year - marrydate.year -
+        ((deathdate.month, deathdate.day) <
+         (marrydate.month, marrydate.day))) < 0:
+         return True
+    else:
+        return False
+
+def US06(deathdate,divorcedate):
+    if (deathdate.year - divorcedate.year -
+                ((deathdate.month, deathdate.day) <
+                (divorcedate.month, divorcedate.day))) < 0:
+         return True
+    else:
+        return False
 
 #lists of individual data
 idi = []
@@ -126,9 +162,9 @@ def parseFile(File):
           Death[len(Alive) - 1] = line.strip()[length:]
           death = 0
           Deathday.append(line.strip()[length:])
+          birthdate = Date(Birthday[len(Birthday) - 1])
           deathdate = Date(Deathday[len(Deathday) - 1])
-          if ((deathdate.year - year - ((deathdate.month, deathdate.day) <
-                                        (month, day))) < 0):
+          if (US03(birthdate, deathdate)):
             Age[len(Alive) - 1] = deathdate.year - year - (
               (deathdate.month, deathdate.day) < (month, day))
             lst_US03.append("Error US03: Birthdate of " + Name[len(Alive) - 1] +
@@ -282,9 +318,7 @@ def main():
                 ((today.month, today.day) < (divorcedate.month, divorcedate.day))) < 0:
                 DateAfterToday.append('Error US01 Divorce Date ' + Divorced[i] + ' Occurs after today')
 
-            if (divorcedate.year - marrydate.year -
-                ((divorcedate.month, divorcedate.day) <
-                (marrydate.month, marrydate.day))) < 0:
+            if (US04(marrydate, divorcedate)):
                 MarriageAfterDivorce.append("Error US04 Marriage " + Married[i] +
                                         " of " + Husband_Name[i] + "(" + Husband_ID[i] + ") and " + Wife_Name[i] + "(" +
                                         Wife_ID[i] + ") occurs after their divorce " +
