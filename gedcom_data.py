@@ -1,3 +1,4 @@
+from logging import RootLogger
 import sys
 from pathlib import Path
 import datetime
@@ -38,6 +39,33 @@ class Date:
     self.month = months[list[1]]
     self.year = int(list[2])
 
+def US01(date):
+    today = datetime.datetime.now()
+    if (today.year - date.year - ((today.month, today.day) <  (date.month, date.day))) < 0:
+      return True
+    else:
+      return False
+
+def US02(birthdate,marrydate):
+    if (birthdate.year - marrydate.year -
+        ((birthdate.month, birthdate.day) <
+         (marrydate.month, marrydate.day))) < 0:
+         return True
+    else:
+        return False
+
+def US03(birthdate, deathdate):
+  if ((deathdate.year - birthdate.year) - ((deathdate.month, deathdate.day) < (birthdate.month, birthdate.day))) < 0:
+    return True
+  else:
+    return False
+
+def US04(marrydate, divorcedate):
+  if ((divorcedate.year - marrydate.year) - ((divorcedate.month, divorcedate.day) < (marrydate.month, marrydate.day))) < 0:
+    return True
+  else:
+    return False
+#returns true if there is a marriage after death 
 def US05(deathdate,marrydate):
     if (deathdate.year - marrydate.year -
         ((deathdate.month, deathdate.day) <
@@ -45,6 +73,7 @@ def US05(deathdate,marrydate):
          return True
     else:
         return False
+#return true if there is a divorce after death
 def US06(deathdate,divorcedate):
     if (deathdate.year - divorcedate.year -
                 ((deathdate.month, deathdate.day) <
@@ -52,6 +81,30 @@ def US06(deathdate,divorcedate):
          return True
     else:
         return False
+#check if husband and wife are siblings (returns true if one parent is shared between spouses)
+def US18(husband_id, wife_id):
+  if(Child[idi.index(husband_id)] == 'N/A' or Child[idi.index(wife_id)] == 'N/A'):
+    return False
+  Hdad = Husband_ID[idf.index(Child[idi.index(husband_id)])]
+  Hmom = Wife_ID[idf.index(Child[idi.index(husband_id)])]
+  Wdad = Husband_ID[idf.index(Child[idi.index(wife_id)])]
+  Wmom = Wife_ID[idf.index(Child[idi.index(wife_id)])]
+  if (Hdad == Wdad):
+    return True
+  elif(Hmom == Wmom):
+    return True
+  else:
+    return False
+def US21(husband_id, wife_id, i):
+  Hgender = Gender[idi.index(husband_id)]=='F'
+  Wgender = Gender[idi.index(wife_id)]=='M'
+  if(Hgender=='F' and Wgender == 'M'):
+    return "Error US21 "+ Husband_Name[i] + "(" + husband_id + ") is a female and "\
+      + Wife_Name[i] + "(" + wife_id + ") is a male."
+  elif(Hgender=='F'):
+    return "Error US21 "+ Husband_Name[i] + "(" + husband_id + ") is a female."
+  elif(Gender[idi.index(wife_id)]=='M'):
+    return "Error US21 "+ Wife_Name[i] + "(" + wife_id + ") is a male."
 
 #lists of individual data
 idi = []
@@ -76,7 +129,7 @@ Wife_Name = []
 Children = []
 
 #list of user stores
-US03 = []
+lst_US03 = []
 
 
 #Begin iterating line by line
@@ -134,12 +187,12 @@ def parseFile(File):
           Death[len(Alive) - 1] = line.strip()[length:]
           death = 0
           Deathday.append(line.strip()[length:])
+          birthdate = Date(Birthday[len(Birthday) - 1])
           deathdate = Date(Deathday[len(Deathday) - 1])
-          if ((deathdate.year - year - ((deathdate.month, deathdate.day) <
-                                        (month, day))) < 0):
+          if (US03(birthdate, deathdate)):
             Age[len(Alive) - 1] = deathdate.year - year - (
               (deathdate.month, deathdate.day) < (month, day))
-            US03.append("Error US03: Birthdate of " + Name[len(Alive) - 1] +
+            lst_US03.append("Error US03: Birthdate of " + Name[len(Alive) - 1] +
                         "(" + idi[len(Alive) - 1] +
                         ") occurs after his/her death.")
           else:
@@ -219,6 +272,8 @@ def main():
     DivorcedAfterDeath = []
     MarriageAfterDivorce = []
     DateAfterToday = []
+    Siblings = []
+    WrongGender = []
     today = datetime.datetime.now()
 
     for i in range(len(idi)):
@@ -290,14 +345,20 @@ def main():
                 ((today.month, today.day) < (divorcedate.month, divorcedate.day))) < 0:
                 DateAfterToday.append('Error US01 Divorce Date ' + Divorced[i] + ' Occurs after today')
 
-            if (divorcedate.year - marrydate.year -
-                ((divorcedate.month, divorcedate.day) <
-                (marrydate.month, marrydate.day))) < 0:
+            if (US04(marrydate, divorcedate)):
                 MarriageAfterDivorce.append("Error US04 Marriage " + Married[i] +
                                         " of " + Husband_Name[i] + "(" + Husband_ID[i] + ") and " + Wife_Name[i] + "(" +
                                         Wife_ID[i] + ") occurs after their divorce " +
                                         Divorced[i] + ".")
-
+        #Siblings should not marry
+        if(US18(Husband_ID[i], Wife_ID[i])):
+          Siblings.append("Error US18 "+ Husband_Name[i] + "(" + Husband_ID[i] + ") and " + Wife_Name[i] + "(" +
+                                        Wife_ID[i] + ") are siblings.")
+        #Correct gender for role
+        gendererror = US21(Husband_ID[i], Wife_ID[i], i)
+        if(gendererror!=None):
+          WrongGender.append(gendererror)
+        
         #Write tables to Output.txt
         file1 = open("Output.txt", "w")
         file1.write("Individuals\n")
@@ -305,11 +366,14 @@ def main():
         file1.write("Families\n")
         file1.write("{}".format(Families))
         #list = convertDate(Birthday[1])
+        file1.write("\n{}".format(DateAfterToday))
         file1.write("\n{}".format(MarrbeforeBirth))
+        file1.write("\n{}".format(lst_US03))
+        file1.write("\n{}".format(MarriageAfterDivorce))
         file1.write("\n{}".format(MarryAfterDeath))
         file1.write("\n{}".format(DivorcedAfterDeath))
-        file1.write("\n{}".format(MarriageAfterDivorce))
-        file1.write("\n{}".format(US03))
-        file1.write("\n{}".format(DateAfterToday))
+        file1.write("\n{}".format(Siblings))
+        file1.write("\n{}".format(WrongGender))
+
 if __name__=="__main__":
     main()
