@@ -75,6 +75,4 @@ class TestStringMethods(unittest.TestCase):
         result = US21('@I12@', '@I11@', 5)
         self.assertEqual(result, None)
 if __name__ == '__main__':
-    logging.basicConfig( stream=sys.stderr )
-    logging.getLogger( "SomeTest.testSomething" ).setLevel( logging.DEBUG )
     unittest.main()
