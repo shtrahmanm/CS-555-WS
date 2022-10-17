@@ -82,26 +82,29 @@ def US06(deathdate,divorcedate):
     else:
         return False
 
-
+#checks if males in the same family have the same last name
 def US16(husband_id, children_id):
   if(children_id == 'N/A'):
-    return False
+    return None
   hus_split = Name[idi.index(husband_id)].split()
   child_ids = children_id.split()
   for i in range (0, len(child_ids)-1):
     child_names = Name[idi.index(child_ids[i])].split()
     if(Gender[idi.index(child_ids[i])] == 'M'  and child_names[1] != hus_split[1]):
-      return True
-  return False
+      return "Error US16 " + Name[idi.index(husband_id)] + "(" + idi[idi.index(husband_id)] + ") does not have the same last name as his son, " + Name[idi.index(
+                child_ids[i])] + " (" + child_ids[i] + ")."
+  return None
 
+
+#check if parents are married to their children
 def US17(husband_id, wife_id, children_id):
   if(children_id == 'N/A'):
     return None
   child_ids = children_id.split()
   for i in range (0, len(child_ids)-1):
-    if (wife_id == child_ids[i]):
-      return "Error US17 " + Name[idi.index(wife_id)] + "(" + wife_id + "( is married to her child " + Name[idi.index(child_ids[i])] + "(" + child_ids[i] + ")."
-    elif (husband_id == child_ids[i]):
+    if (wife_id == Wife_ID[idf.index(Child[idi.index(child_ids[i])])]):
+      return "Error US17 " + Name[idi.index(wife_id)] + "(" + wife_id + ") is married to her child " + Name[idi.index(child_ids[i])] + "(" + child_ids[i] + ")."
+    elif (husband_id == Husband_ID[idf.index(Child[idi.index(child_ids[i])])]):
       return "Error US17 " + Name[idi.index(husband_id)] + "(" + husband_id + "( is married to his child " + Name[idi.index(child_ids[i])] + "(" + child_ids[i] + ")."
     else:
       return None
@@ -121,6 +124,7 @@ def US18(husband_id, wife_id):
     return True
   else:
     return False
+
 def US21(husband_id, wife_id, i):
   Hgender = Gender[idi.index(husband_id)]=='F'
   Wgender = Gender[idi.index(wife_id)]=='M'
@@ -379,8 +383,9 @@ def main():
                                         Wife_ID[i] + ") occurs after their divorce " +
                                         Divorced[i] + ".")
 
-        if(US16(Husband_ID[i], Children[i])):
-          MalesName.append("Error US16 " + Husband_Name[i] + "(" + Husband_ID[i] + ") does not have the same last name as one or more of his sons. ")
+        maleNames = US16(Husband_ID[i], Children[i])
+        if(maleNames != None):
+          MalesName.append(maleNames)
 
         marriagewithchild = US17(Husband_ID[i], Wife_ID[i], Children[i])
         if(marriagewithchild != None):
@@ -410,6 +415,7 @@ def main():
         file1.write("\n{}".format(MarryAfterDeath))
         file1.write("\n{}".format(DivorcedAfterDeath))
         file1.write("\n{}".format(MalesName))
+        file1.write("\n{}".format(MarriageToChildren))
         file1.write("\n{}".format(Siblings))
         file1.write("\n{}".format(WrongGender))
 
