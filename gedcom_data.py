@@ -1,3 +1,4 @@
+from logging import RootLogger
 import sys
 from pathlib import Path
 import datetime
@@ -64,7 +65,7 @@ def US04(marrydate, divorcedate):
     return True
   else:
     return False
-    
+#returns true if there is a marriage after death 
 def US05(deathdate,marrydate):
     if (deathdate.year - marrydate.year -
         ((deathdate.month, deathdate.day) <
@@ -72,7 +73,7 @@ def US05(deathdate,marrydate):
          return True
     else:
         return False
-
+#return true if there is a divorce after death
 def US06(deathdate,divorcedate):
     if (deathdate.year - divorcedate.year -
                 ((deathdate.month, deathdate.day) <
@@ -80,6 +81,56 @@ def US06(deathdate,divorcedate):
          return True
     else:
         return False
+
+
+def US16(husband_id, children_id):
+  if(children_id == 'N/A'):
+    return False
+  hus_split = Name[idi.index(husband_id)].split()
+  child_ids = children_id.split()
+  for i in range (0, len(child_ids)-1):
+    child_names = Name[idi.index(child_ids[i])].split()
+    if(Gender[idi.index(child_ids[i])] == 'M'  and child_names[1] != hus_split[1]):
+      return True
+  return False
+
+def US17(husband_id, wife_id, children_id):
+  if(children_id == 'N/A'):
+    return None
+  child_ids = children_id.split()
+  for i in range (0, len(child_ids)-1):
+    if (wife_id == child_ids[i]):
+      return "Error US17 " + Name[idi.index(wife_id)] + "(" + wife_id + "( is married to her child " + Name[idi.index(child_ids[i])] + "(" + child_ids[i] + ")."
+    elif (husband_id == child_ids[i]):
+      return "Error US17 " + Name[idi.index(husband_id)] + "(" + husband_id + "( is married to his child " + Name[idi.index(child_ids[i])] + "(" + child_ids[i] + ")."
+    else:
+      return None
+
+
+#check if husband and wife are siblings (returns true if one parent is shared between spouses)
+def US18(husband_id, wife_id):
+  if(Child[idi.index(husband_id)] == 'N/A' or Child[idi.index(wife_id)] == 'N/A'):
+    return False
+  Hdad = Husband_ID[idf.index(Child[idi.index(husband_id)])]
+  Hmom = Wife_ID[idf.index(Child[idi.index(husband_id)])]
+  Wdad = Husband_ID[idf.index(Child[idi.index(wife_id)])]
+  Wmom = Wife_ID[idf.index(Child[idi.index(wife_id)])]
+  if (Hdad == Wdad):
+    return True
+  elif(Hmom == Wmom):
+    return True
+  else:
+    return False
+def US21(husband_id, wife_id, i):
+  Hgender = Gender[idi.index(husband_id)]=='F'
+  Wgender = Gender[idi.index(wife_id)]=='M'
+  if(Hgender=='F' and Wgender == 'M'):
+    return "Error US21 "+ Husband_Name[i] + "(" + husband_id + ") is a female and "\
+      + Wife_Name[i] + "(" + wife_id + ") is a male."
+  elif(Hgender=='F'):
+    return "Error US21 "+ Husband_Name[i] + "(" + husband_id + ") is a female."
+  elif(Gender[idi.index(wife_id)]=='M'):
+    return "Error US21 "+ Wife_Name[i] + "(" + wife_id + ") is a male."
 
 #lists of individual data
 idi = []
@@ -247,6 +298,10 @@ def main():
     DivorcedAfterDeath = []
     MarriageAfterDivorce = []
     DateAfterToday = []
+    Siblings = []
+    WrongGender = []
+    MalesName = []
+    MarriageToChildren =[]
     today = datetime.datetime.now()
 
     for i in range(len(idi)):
@@ -324,6 +379,23 @@ def main():
                                         Wife_ID[i] + ") occurs after their divorce " +
                                         Divorced[i] + ".")
 
+        if(US16(Husband_ID[i], Children[i])):
+          MalesName.append("Error US16 " + Husband_Name[i] + "(" + Husband_ID[i] + ") does not have the same last name as one or more of his sons. ")
+
+        marriagewithchild = US17(Husband_ID[i], Wife_ID[i], Children[i])
+        if(marriagewithchild != None):
+          MarriageToChildren.append(marriagewithchild)
+
+
+        #Siblings should not marry
+        if(US18(Husband_ID[i], Wife_ID[i])):
+          Siblings.append("Error US18 "+ Husband_Name[i] + "(" + Husband_ID[i] + ") and " + Wife_Name[i] + "(" +
+                                        Wife_ID[i] + ") are siblings.")
+        #Correct gender for role
+        gendererror = US21(Husband_ID[i], Wife_ID[i], i)
+        if(gendererror!=None):
+          WrongGender.append(gendererror)
+        
         #Write tables to Output.txt
         file1 = open("Output.txt", "w")
         file1.write("Individuals\n")
@@ -337,6 +409,9 @@ def main():
         file1.write("\n{}".format(MarriageAfterDivorce))
         file1.write("\n{}".format(MarryAfterDeath))
         file1.write("\n{}".format(DivorcedAfterDeath))
+        file1.write("\n{}".format(MalesName))
+        file1.write("\n{}".format(Siblings))
+        file1.write("\n{}".format(WrongGender))
 
 if __name__=="__main__":
     main()
