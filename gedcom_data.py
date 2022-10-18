@@ -404,7 +404,7 @@ def main():
         if(maleNames != None):
           MalesName.append(maleNames)
 
-        if(US15(Siblings)):
+        if(US15(Children[i])):
           TooManySiblings.append('Error US15 ' + Husband_ID[i] + ' and ' + Wife_ID[i] + ' have too many children.')
 
         #Married to descendant
