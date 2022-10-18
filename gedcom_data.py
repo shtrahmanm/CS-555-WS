@@ -97,17 +97,15 @@ def US16(husband_id, children_id):
 
 
 #check if parents are married to their children
-def US17(husband_id, wife_id, children_id):
-  if(children_id == 'N/A'):
+def US17(husband_id, wife_id):
+  if(Child[idi.index(husband_id)] != 'N/A'):
+    if(wife_id == Wife_ID[idf.index(Child[idi.index(husband_id)])]):
+      return "Error US17 The mother, " + Name[idi.index(wife_id)] + "(" + wife_id + "), is married to her child " + Name[idi.index(husband_id)] + "(" + husband_id + ")."
+  elif(Child[idi.index(wife_id)] != 'N/A'):
+    if(husband_id == Husband_ID[idf.index(Child[idi.index(wife_id)])]):
+      return "Error US17 The father, " + Name[idi.index(husband_id)] + "(" + husband_id + "), is married to his child " + Name[idi.index(wife_id)] + "(" + wife_id + ")."
+  else:
     return None
-  child_ids = children_id.split()
-  for i in range (0, len(child_ids)-1):
-    if (wife_id == Wife_ID[idf.index(Child[idi.index(child_ids[i])])]):
-      return "Error US17 " + Name[idi.index(wife_id)] + "(" + wife_id + ") is married to her child " + Name[idi.index(child_ids[i])] + "(" + child_ids[i] + ")."
-    elif (husband_id == Husband_ID[idf.index(Child[idi.index(child_ids[i])])]):
-      return "Error US17 " + Name[idi.index(husband_id)] + "(" + husband_id + "( is married to his child " + Name[idi.index(child_ids[i])] + "(" + child_ids[i] + ")."
-    else:
-      return None
 
 
 #check if husband and wife are siblings (returns true if one parent is shared between spouses)
@@ -387,7 +385,7 @@ def main():
         if(maleNames != None):
           MalesName.append(maleNames)
 
-        marriagewithchild = US17(Husband_ID[i], Wife_ID[i], Children[i])
+        marriagewithchild = US17(Husband_ID[i], Wife_ID[i])
         if(marriagewithchild != None):
           MarriageToChildren.append(marriagewithchild)
 
