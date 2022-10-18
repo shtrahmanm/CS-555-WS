@@ -5,7 +5,7 @@ import logging
 class TestStringMethods(unittest.TestCase):
 
     #Runs script on Sprint 2 ged file so that info lists are populated.
-    parseFile(Path('Sprint2.ged'))
+    parseFile(Path('Sprint2-2.ged'))
 
     def test_US01_1(self):
         result = US01(Date("17 AUG 2022"))
@@ -116,7 +116,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(result, None)
     def test_US17_4(self):
         result = US17('@I16@', '@I11@', 5)
-        self.assertEqual(result, 'Error US17 The mother, Elina Revko(@I11@), is married to her child Gardner Revko(@I16@).')
+        self.assertEqual(result, 'Error US17 Gardner Revko(@I16@) is married to his mother Elina Revko(@I11@).')
     def test_US17_5(self):
         result = US17('@I14@', '@I15@', 7)
         self.assertEqual(result, None)
@@ -141,7 +141,7 @@ class TestStringMethods(unittest.TestCase):
     
     #Tests for user story 21
     def test_US21_1(self):
-        result = US21('@I14@', '@I15@', 6)
+        result = US21('@I14@', '@I15@', 7)
         self.assertEqual(result, 'Error US21 Pamela Trisha(@I15@) is a male.')
     def test_US21_2(self):
         result = US21('@I1@', '@I2@', 0)
