@@ -39,6 +39,39 @@ class TestStringMethods(unittest.TestCase):
         result = US02(Date("16 MAR 1901"), Date("17 FEB 2002"))
         self.assertEqual(result, True)
 
+
+    def test_US03_1(self):
+        result = US03(Date("16 JUN 2022"), Date("17 AUG 2022"))
+        self.assertEqual(result, False)
+    def test_US03_2(self):
+        result = US03(Date("16 SEP 2022"), Date("15 JUN 2022"))
+        self.assertEqual(result, True)
+    def test_US03_3(self):
+        result = US03(Date("16 OCT 1968"), Date("17 MAY 2022"))
+        self.assertEqual(result, False)
+    def test_US03_4(self):
+        result = US03(Date("16 NOV 2022"), Date("1 JAN 1973"))
+        self.assertEqual(result, True)
+    def test_US03_5(self):
+        result = US03(Date("16 MAR 1901"), Date("17 FEB 2002"))
+        self.assertEqual(result, False)
+
+    def test_US04_1(self):
+        result = US04(Date("16 JUN 2022"), Date("17 AUG 2022"))
+        self.assertEqual(result, False)
+    def test_US04_2(self):
+        result = US04(Date("16 SEP 2022"), Date("15 JUN 2022"))
+        self.assertEqual(result, True)
+    def test_US04_3(self):
+        result = US04(Date("16 OCT 1968"), Date("17 MAY 2022"))
+        self.assertEqual(result, False)
+    def test_US04_4(self):
+        result = US04(Date("16 NOV 2022"), Date("1 JAN 1973"))
+        self.assertEqual(result, True)
+    def test_US04_5(self):
+        result = US04(Date("16 MAR 1901"), Date("17 FEB 2002"))
+        self.assertEqual(result, False)
+
     #Tests for user story 5
     def test_US05_1(self):
         result = US05(Date("16 JUL 2022"), Date("17 AUG 2022"))
@@ -154,6 +187,41 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(result, None)
     def test_US21_5(self):
         result = US21(Husband_ID[3], Wife_ID[3], 3)
+        self.assertEqual(result, None)
+
+    
+    #Tests for user story 31 
+    def test_US31_1(self):
+        result = US31(33)
+        self.assertEqual(result, True)
+    def test_US31_2(self):
+        result = US31(30)
+        self.assertEqual(result, False)
+    def test_US31_3(self):
+        result = US31(29)
+        self.assertEqual(result, False)
+    def test_US31_4(self):
+        result = US31(34)
+        self.assertEqual(result, True)
+    def test_US31_5(self):
+        result = US31(18)
+        self.assertEqual(result, False)
+
+    #Tests for user story 32 
+    def test_US32_1(self):
+        result = US32('@I3@ @I4@ @I17@ @I18@ @I19@ @I20@ @I21@ @I22@ @I23@ @I24@ @I25@ @I26@ @I27@ @I28@ @I29@ @I30@')
+        self.assertEqual(result, "US32: ['Brent Shtrahman', 'Trent Shtrahman', 'Slab Shtrahman'] are siblings born on the same day (multiple births).")
+    def test_US32_2(self):
+        result = US32('@I1@ @I12@ @I36@ ')
+        self.assertEqual(result, None)
+    def test_US32_3(self):
+        result = US32('@I2@ @I31@')
+        self.assertEqual(result, None)
+    def test_US32_4(self):
+        result = US32('N/A')
+        self.assertEqual(result, None)
+    def test_US32_5(self):
+        result = US32('@I13@')
         self.assertEqual(result, None)
 
     def test_US29_1(self):

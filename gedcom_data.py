@@ -1,4 +1,5 @@
 from logging import RootLogger
+from re import match
 import sys
 from pathlib import Path
 import datetime
@@ -155,14 +156,33 @@ def US29(i):
     return False
 
 #List living married
-
 def US30(i):
   if(Alive[i] == 'True' and Spouse[i] != 'N/A'):
     return True
   else:
     return False
 
-
+#List living individuals over 30 that are single
+def US31(i):
+  if(Age[i] > 30 and Spouse[i] == 'N/A'):
+    return True
+  return False
+#List multiple births
+def US32(children_id):
+  if(children_id == 'N/A'):
+    return None
+  matchingbirths = []
+  child_ids = children_id.split()
+  for i in range(0, len(child_ids)-1):
+    tempbirthday = Birthday[idi.index(child_ids[i])]
+    for j in range(i+1,len(child_ids)-1):
+      if(tempbirthday == Birthday[idi.index(child_ids[j])]):
+        matchingbirths.append(Name[idi.index(child_ids[i])])
+        matchingbirths.append(Name[idi.index(child_ids[j])])
+  matchingbirths = [*set(matchingbirths)]
+  if(matchingbirths != []):
+    return 'US32: ' + str(matchingbirths) + ' are siblings born on the same day (multiple births).'
+  return None
 
 #List orphans
 def US33(i):
@@ -363,6 +383,10 @@ def main():
     OlderThan150 = []
     TooManySiblings = []
     MalesName = []
+    ThirtyAndSingle = []
+    MultipleBirth = []
+    Orphan = []
+    AgeGap = []
     Orphan = []
     AgeGap = []
     Deceased = []
@@ -382,6 +406,13 @@ def main():
 
         if(US07(Age[i])):
           OlderThan150.append('Error US07 Age of ' + Name[i] + ' is greater than 150')
+        
+        if (US31(i)):
+          ThirtyAndSingle.append('Error US31: ' + Name[i] + '(' + idi[i] + ') is a living person over 30 who has never been married.')
+
+        if(US33(i)):
+          Orphan.append('US33: ' + Name[i] + '(' + idi[i] + ') is an orphaned child.')
+          
         if(US33(i)):
           Orphan.append('US33: ' + Name[i] + '(' + idi[i] + ') is an orphaned child.')
 
@@ -390,7 +421,6 @@ def main():
 
         if(US30(i)):
           AliveAndMarried.append('US30: ' + Name[i] + ' is alive and married.')
-
 
     for i in range(len(idf)):
         #date of marriage converted to usable format
@@ -475,6 +505,12 @@ def main():
         gendererror = US21(Husband_ID[i], Wife_ID[i], i)
         if(gendererror!=None):
           WrongGender.append(gendererror)
+
+        #Check for multiple births
+        multiplebirths = US32(Children[i])
+        if(multiplebirths!=None):
+          MultipleBirth.append(multiplebirths)
+
         #Check marriage age difference
         double_age = US34(Husband_ID[i], Wife_ID[i], marrydate, i)
         if(double_age!=None):
@@ -510,10 +546,17 @@ def main():
         file1.write("\n{}".format(Siblings))
         #US21
         file1.write("\n{}".format(WrongGender))
+
+        #US31
+        file1.write("\n{}".format(ThirtyAndSingle))
+        #US32
+        file1.write("\n{}".format(MultipleBirth))
+
         #US29
         file1.write("\n{}".format(Deceased))
         #US30
         file1.write("\n{}".format(AliveAndMarried))
+        
         #US33
         file1.write("\n{}".format(Orphan))
         #US34
