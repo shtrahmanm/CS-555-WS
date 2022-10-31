@@ -22,10 +22,10 @@ Individuals
 | @I18@ |   Malt Shtrahman   |   M    |  3 NOV 2005 |  16 |  True |    N/A     |  @F1@ |  N/A   |
 | @I19@ |   Mast Shtrahman   |   M    |  5 JUL 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I20@ |   Crab Shtrahman   |   M    |  2 APR 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
-| @I21@ |   Slab Shtrahman   |   M    |  3 MAY 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
+| @I21@ |   Slab Shtrahman   |   M    |  1 JAN 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I22@ |   Don Shtrahman    |   M    |  3 MAR 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I23@ |  Trent Shtrahman   |   M    |  1 JAN 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
-| @I24@ |  Brent Shtrahman   |   M    |  3 FEB 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
+| @I24@ |  Brent Shtrahman   |   M    |  1 JAN 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I25@ |   Chet Shtrahman   |   M    |  5 MAY 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I26@ |  Bryan Shtrahman   |   M    |  5 SEP 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I27@ |   Ali Shtrahman    |   M    | 10 MAY 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
@@ -34,21 +34,23 @@ Individuals
 | @I30@ |  Jacko Shtrahman   |   M    | 17 OCT 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I31@ |   Geno Shtrahman   |   M    |  2 AUG 1973 |  37 | False | 8 AUG 2010 |  @F3@ |  @F9@  |
 | @I32@ |  Karla Shtrahman   |   F    | 19 APR 1975 |  39 | False | 3 JAN 2015 |  N/A  |  @F9@  |
-| @I33@ |  Orphan Shtrahman  |   M    | 30 MAY 2006 |  16 |  True |    N/A     |  @F9@ |  N/A   |
+| @I33@ |  Orphan Shtrahman  |   M    | 30 MAY 2005 |  17 |  True |    N/A     |  @F9@ |  N/A   |
+| @I35@ |    Lonely Kogan    |   M    |  5 AUG 1978 |  44 |  True |    N/A     |  @F4@ |  N/A   |
+| @I36@ |  Lonely Shtrahman  |   M    | 16 SEP 1979 |  43 |  True |    N/A     |  @F2@ |  N/A   |
 +-------+--------------------+--------+-------------+-----+-------+------------+-------+--------+
 Families
 +------+-------------+------------+------------+------------------+---------+--------------------+-----------------------------------------------------------------------------------------------+
 |  ID  |   Married   |  Divorced  | Husband ID |   Husband Name   | Wife ID |     Wife Name      |                                            Children                                           |
 +------+-------------+------------+------------+------------------+---------+--------------------+-----------------------------------------------------------------------------------------------+
 | @F1@ | 12 MAY 1998 | 1 OCT 2024 |    @I1@    | Edward Shtrahman |   @I2@  |   Lana Shtrahman   | @I3@ @I4@ @I17@ @I18@ @I19@ @I20@ @I21@ @I22@ @I23@ @I24@ @I25@ @I26@ @I27@ @I28@ @I29@ @I30@ |
-| @F2@ | 15 APR 1968 | 6 FEB 1967 |    @I7@    | Jacob Shtrahman  |   @I8@  | Isabella Shtrahman |                                           @I1@ @I12@                                          |
+| @F2@ | 15 APR 1968 | 6 FEB 1967 |    @I7@    | Jacob Shtrahman  |   @I8@  | Isabella Shtrahman |                                        @I1@ @I12@ @I36@                                       |
 | @F3@ | 10 NOV 1970 |    N/A     |    @I5@    | Nison Shaknovsky |   @I6@  |  Sonia Shaknovsky  |                                           @I2@ @I31@                                          |
-| @F4@ |  4 DEC 1967 |    N/A     |    @I9@    |    Ben Kogan     |   @I6@  |  Sonia Shaknovsky  |                                          @I10@ @I11@                                          |
+| @F4@ |  4 DEC 1967 |    N/A     |    @I9@    |    Ben Kogan     |   @I6@  |  Sonia Shaknovsky  |                                       @I10@ @I11@ @I35@                                       |
 | @F5@ |  7 MAY 1994 |    N/A     |   @I10@    |   Boris Kogan    |  @I11@  |   Janette Kogan    |                                             @I15@                                             |
 | @F6@ |  3 JUN 2000 |    N/A     |   @I13@    |  Gardner Revko   |  @I12@  |    Elina Revko     |                                              N/A                                              |
 | @F7@ |  2 MAR 1967 | 7 AUG 1982 |   @I14@    |    Igor Revko    |  @I12@  |    Elina Revko     |                                             @I13@                                             |
 | @F8@ |  8 SEP 2017 |    N/A     |   @I15@    |   Grant Kogan    |  @I16@  |   Pamela Trisha    |                                              N/A                                              |
-| @F9@ |  5 APR 2000 |    N/A     |   @I31@    |  Geno Shtrahman  |  @I32@  |  Karla Shtrahman   |                                             @I33@                                             |
+| @F9@ |  5 APR 2000 |    N/A     |   @I31@    |  Geno Shtrahman  |  @I32@  |  Karla Shtrahman   |                                          @I33@ @I34@                                          |
 +------+-------------+------------+------------+------------------+---------+--------------------+-----------------------------------------------------------------------------------------------+
 ['Error US01 Birth Date 19 AUG 2023 happens after today', 'Error US01 Divorce Date 1 OCT 2024 Occurs after today']
 ["Error US02 Marriage 2 MAR 1967 of @I14@ and @I12@ occurs before Husband's birth 10 APR 1967.", "Error US02 Marriage 2 MAR 1967 of @I14@ and @I12@ occurs before Wife's birth 15 JUL 1969."]
@@ -57,12 +59,14 @@ Families
 ["Error US05 Marriage 4 DEC 1967 of @I9@ and @I6@ occurs after wife's death 8 JUN 1967."]
 ["Error US06 Divorce 7 AUG 1982 of @I14@ and @I12@ occurs after wife's death 2 MAY 1980."]
 ['Error US07 Age of Isabella Shtrahman is greater than 150']
-['Error US15 @I1@ and @I2@ have too many children.']
+['Error US15 @I1@ and @I2@ have too many children.', 'Error US15 @I7@ and @I8@ have too many children.', 'Error US15 @I9@ and @I6@ have too many children.']
 ['Error US16 Edward Shtrahman(@I1@) does not have the same last name as his son, Matthew Shtra (@I3@).']
 ['Error US17 Gardner Revko(@I13@) is married to his mother Elina Revko(@I12@).']
 ['Error US18 Boris Kogan(@I10@) and Janette Kogan(@I11@) are siblings.']
 ['Error US21 Pamela Trisha(@I16@) is a male.']
+['Error US31: Lonely Kogan(@I35@) is a living person over 30 who has never been married.', 'Error US31: Lonely Shtrahman(@I36@) is a living person over 30 who has never been married.']
+["US32: ['Brent Shtrahman', 'Slab Shtrahman', 'Trent Shtrahman'] are siblings born on the same day (multiple births)."]
 ['US29: Matthew Shtra is deceased.', 'US29: Ben Kogan is deceased.', 'US29: Igor Revko is deceased.', 'US29: Geno Shtrahman is deceased.', 'US29: Karla Shtrahman is deceased.']
 ['US30: Edward Shtrahman is alive and married.', 'US30: Lana Shtrahman is alive and married.', 'US30: Nison Shaknovsky is alive and married.', 'US30: Sonia Shaknovsky is alive and married.', 'US30: Jacob Shtrahman is alive and married.', 'US30: Isabella Shtrahman is alive and married.', 'US30: Boris Kogan is alive and married.', 'US30: Janette Kogan is alive and married.', 'US30: Elina Revko is alive and married.', 'US30: Gardner Revko is alive and married.', 'US30: Grant Kogan is alive and married.', 'US30: Pamela Trisha is alive and married.']
-['US33: Orphan Shtrahman(@I33@) is an orphaned child.']
+['US33: Orphan Shtrahman(@I33@) is an orphaned child.', 'US33: Orphan Shtrahman(@I33@) is an orphaned child.']
 ['Error US34 Isabella Shtrahman(167) was more than double the age of Jacob Shtrahman(23) at the time of marriage.', 'Error US34 Boris Kogan(94) was more than double the age of Janette Kogan(21) at the time of marriage.', 'Error US34 Elina Revko(-3) was more than double the age of Igor Revko(-1) at the time of marriage.']
