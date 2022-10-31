@@ -40,7 +40,7 @@
 2 DATE 4 MAY 2000
 1 FAMC @F1@
 0 @I4@ INDI
-1 NAME Emily Shtrahman
+1 NAME Emily Shtrahman 
 2 GIVN Emily Shtrahman
 2 SURN Shtrahman
 1 SEX F
@@ -48,7 +48,7 @@
 2 DATE 19 AUG 2023
 1 FAMC @F1@
 0 @I5@ INDI
-1 NAME Nison Shaknovsky
+1 NAME Nison Shaknovsky 
 2 GIVN Nison Shaknovsky
 2 SURN Shaknovsky
 1 SEX M
@@ -56,7 +56,7 @@
 2 DATE 10 NOV 1946
 1 FAMS @F3@
 0 @I6@ INDI
-1 NAME Sonia Shaknovsky
+1 NAME Sonia Shaknovsky 
 2 GIVN Sonia Shaknovsky
 2 SURN Shaknovsky
 1 SEX F
@@ -65,7 +65,7 @@
 1 FAMS @F3@
 1 FAMS @F4@
 0 @I7@ INDI
-1 NAME Jacob Shtrahman
+1 NAME Jacob Shtrahman 
 2 GIVN Jacob Shtrahman
 2 SURN Shtrahman
 1 SEX M

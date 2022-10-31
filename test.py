@@ -39,6 +39,7 @@ class TestStringMethods(unittest.TestCase):
         result = US02(Date("16 MAR 1901"), Date("17 FEB 2002"))
         self.assertEqual(result, True)
 
+
     def test_US03_1(self):
         result = US03(Date("16 JUN 2022"), Date("17 AUG 2022"))
         self.assertEqual(result, False)
@@ -222,6 +223,38 @@ class TestStringMethods(unittest.TestCase):
     def test_US32_5(self):
         result = US32('@I13@')
         self.assertEqual(result, None)
+
+    def test_US29_1(self):
+        result = US29(0)
+        self.assertEqual(result, False)
+    def test_US29_2(self):
+        result = US29(1)
+        self.assertEqual(result, False)
+    def test_US29_3(self):
+        result = US29(2)
+        self.assertEqual(result, True)
+    def test_US29_4(self):
+        result = US29(3)
+        self.assertEqual(result, False)
+    def test_US29_5(self):
+        result = US29(4)
+        self.assertEqual(result, False)
+
+    def test_US30_1(self):
+        result = US30(0)
+        self.assertEqual(result, True)
+    def test_US30_2(self):
+        result = US30(1)
+        self.assertEqual(result, True)
+    def test_US30_3(self):
+        result = US30(2)
+        self.assertEqual(result, False)
+    def test_US30_4(self):
+        result = US30(3)
+        self.assertEqual(result, False)
+    def test_US30_5(self):
+        result = US30(4)
+        self.assertEqual(result, True)
 
     #Tests for user story 33
     def test_US33_1(self):
