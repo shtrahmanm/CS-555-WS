@@ -181,7 +181,7 @@ def US32(children_id):
         matchingbirths.append(Name[idi.index(child_ids[j])])
   matchingbirths = [*set(matchingbirths)]
   if(matchingbirths != []):
-    return 'US32: ' + str(matchingbirths) + ' are siblings born on the same day (multiple births).'
+    return 'US32: ' + str(sorted(matchingbirths)) + ' are siblings born on the same day (multiple births).'
   return None
 
 #List orphans

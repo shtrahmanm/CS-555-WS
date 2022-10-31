@@ -210,7 +210,7 @@ class TestStringMethods(unittest.TestCase):
     #Tests for user story 32 
     def test_US32_1(self):
         result = US32('@I3@ @I4@ @I17@ @I18@ @I19@ @I20@ @I21@ @I22@ @I23@ @I24@ @I25@ @I26@ @I27@ @I28@ @I29@ @I30@')
-        self.assertEqual(result, "US32: ['Brent Shtrahman', 'Trent Shtrahman', 'Slab Shtrahman'] are siblings born on the same day (multiple births).")
+        self.assertEqual(result, "US32: ['Brent Shtrahman', 'Slab Shtrahman', 'Trent Shtrahman'] are siblings born on the same day (multiple births).")
     def test_US32_2(self):
         result = US32('@I1@ @I12@ @I36@ ')
         self.assertEqual(result, None)
