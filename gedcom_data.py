@@ -1,4 +1,5 @@
 from logging import RootLogger
+from re import match
 import sys
 from pathlib import Path
 import datetime
@@ -82,7 +83,19 @@ def US06(deathdate,divorcedate):
     else:
         return False
 
-#checks if males in the same family have the same last name
+def US07(age):
+  if (age > 150):
+    return True
+  else:
+    return False
+
+#Return true if family contains greater than 15 siblings
+def US15(siblings):
+  if (len(siblings) > 14):
+    return True
+  else:
+    return False
+
 def US16(husband_id, children_id):
   if(children_id == 'N/A'):
     return None
@@ -95,19 +108,20 @@ def US16(husband_id, children_id):
                 child_ids[i])] + " (" + child_ids[i] + ")."
   return None
 
-
-#check if parents are married to their children
-def US17(husband_id, wife_id):
+#Check if married to descendant
+def US17(husband_id, wife_id, i):
   if(Child[idi.index(husband_id)] != 'N/A'):
-    if(wife_id == Wife_ID[idf.index(Child[idi.index(husband_id)])]):
-      return "Error US17 The mother, " + Name[idi.index(wife_id)] + "(" + wife_id + "), is married to her child " + Name[idi.index(husband_id)] + "(" + husband_id + ")."
+    Hmom = Wife_ID[idf.index(Child[idi.index(husband_id)])]
+    if(Hmom == wife_id):
+      return "Error US17 "+ Husband_Name[i] + "(" + husband_id + ") is married to his mother "\
+      + Wife_Name[i] + "(" + wife_id + ")."
   elif(Child[idi.index(wife_id)] != 'N/A'):
-    if(husband_id == Husband_ID[idf.index(Child[idi.index(wife_id)])]):
-      return "Error US17 The father, " + Name[idi.index(husband_id)] + "(" + husband_id + "), is married to his child " + Name[idi.index(wife_id)] + "(" + wife_id + ")."
+    Wdad = Husband_ID[idf.index(Child[idi.index(wife_id)])]
+    if (Wdad == husband_id):
+      return "Error US17 "+  Wife_Name[i] + "(" + wife_id + ") is married to her father "\
+      + Husband_Name[i] + "(" + husband_id + ")."
   else:
     return None
-
-
 #check if husband and wife are siblings (returns true if one parent is shared between spouses)
 def US18(husband_id, wife_id):
   if(Child[idi.index(husband_id)] == 'N/A' or Child[idi.index(wife_id)] == 'N/A'):
@@ -122,7 +136,7 @@ def US18(husband_id, wife_id):
     return True
   else:
     return False
-
+#Correct Gender for role
 def US21(husband_id, wife_id, i):
   Hgender = Gender[idi.index(husband_id)]=='F'
   Wgender = Gender[idi.index(wife_id)]=='M'
@@ -133,6 +147,52 @@ def US21(husband_id, wife_id, i):
     return "Error US21 "+ Husband_Name[i] + "(" + husband_id + ") is a female."
   elif(Gender[idi.index(wife_id)]=='M'):
     return "Error US21 "+ Wife_Name[i] + "(" + wife_id + ") is a male."
+#List living individuals over 30 that are single
+def US31(i):
+  if(Age[i] > 30 and Spouse[i] == 'N/A'):
+    return True
+  return False
+#List multiple births
+def US32(children_id):
+  if(children_id == 'N/A'):
+    return None
+  matchingbirths = []
+  child_ids = children_id.split()
+  for i in range(0, len(child_ids)-1):
+    tempbirthday = Birthday[idi.index(child_ids[i])]
+    for j in range(i+1,len(child_ids)-1):
+      if(tempbirthday == Birthday[idi.index(child_ids[j])]):
+        matchingbirths.append(Name[idi.index(child_ids[i])])
+        matchingbirths.append(Name[idi.index(child_ids[j])])
+  matchingbirths = [*set(matchingbirths)]
+  if(matchingbirths != []):
+    return 'US32: ' + str(matchingbirths) + ' are siblings born on the same day (multiple births).'
+  return None
+#List orphans
+def US33(i):
+  if(Age[i]>18):
+    return False
+  if(Child[i]== 'N/A'):
+    return False
+  family_id = idf.index(Child[i])
+  mother = idi.index(Wife_ID[family_id])
+  father = idi.index(Husband_ID[family_id])
+  if((Death[mother]!='N/A' and Death[father]!='N/A')):
+    return True
+  return False
+#List large marriage age gap
+def US34(husband_id, wife_id,marriage_date, i):
+  husb_birth = Date(Birthday[idi.index(husband_id)])
+  wife_birth = Date(Birthday[idi.index(wife_id)])
+  Hmarr_age = marriage_date.year - husb_birth.year - ((marriage_date.month, marriage_date.day) < (husb_birth.month, husb_birth.day))
+  Wmarr_age = marriage_date.year - wife_birth.year - ((marriage_date.month, marriage_date.day) < (wife_birth.month, wife_birth.day))
+  if(Hmarr_age/Wmarr_age>2):
+    return "Error US34 "+ Husband_Name[i] + "(" + str(Hmarr_age) + ") was more than double the age of " + Wife_Name[i] + "(" +\
+      str(Wmarr_age) + ") at the time of marriage."
+  elif(Wmarr_age/Hmarr_age>2):
+    return "Error US34 "+ Wife_Name[i] + "(" + str(Wmarr_age) + ") was more than double the age of " + Husband_Name[i] + "(" +\
+      str(Hmarr_age) + ") at the time of marriage."
+  return None
 
 #lists of individual data
 idi = []
@@ -155,6 +215,7 @@ Husband_Name = []
 Wife_ID = []
 Wife_Name = []
 Children = []
+
 
 #list of user stores
 lst_US03 = []
@@ -300,22 +361,37 @@ def main():
     DivorcedAfterDeath = []
     MarriageAfterDivorce = []
     DateAfterToday = []
+    MarriedDescendant = []
     Siblings = []
     WrongGender = []
+    OlderThan150 = []
+    TooManySiblings = []
     MalesName = []
-    MarriageToChildren =[]
+    ThirtyAndSingle = []
+    MultipleBirth = []
+    Orphan = []
+    AgeGap = []
     today = datetime.datetime.now()
 
     for i in range(len(idi)):
         birthdate = Date(Birthday[i])
-        if (today.year - birthdate.year - ((today.month, today.day) <  (birthdate.month, birthdate.day))) < 0:
+
+        if (US01(birthdate)):
             DateAfterToday.append('Error US01 Birth Date ' + Birthday[i] + ' happens after today')
 
         if (Death[i] != 'N/A'):
             deathdate = Date(Death[i])
-            if (today.year - deathdate.year - ((today.month, today.day) <  (deathdate.month, deathdate.day))) < 0:
+            if (US01(deathdate)):
                 DateAfterToday.append('Error US01 Death Date ' + Death[i] + ' happens after today')
 
+        if(US07(Age[i])):
+          OlderThan150.append('Error US07 Age of ' + Name[i] + ' is greater than 150')
+        
+        if (US31(i)):
+          ThirtyAndSingle.append('Error US31: ' + Name[i] + '(' + idi[i] + ') is a living person over 30 who has never been married.')
+
+        if(US33(i)):
+          Orphan.append('US33: ' + Name[i] + '(' + idi[i] + ') is an orphaned child.')
 
     for i in range(len(idf)):
         #date of marriage converted to usable format
@@ -385,11 +461,13 @@ def main():
         if(maleNames != None):
           MalesName.append(maleNames)
 
-        marriagewithchild = US17(Husband_ID[i], Wife_ID[i])
-        if(marriagewithchild != None):
-          MarriageToChildren.append(marriagewithchild)
+        if(US15(Children[i])):
+          TooManySiblings.append('Error US15 ' + Husband_ID[i] + ' and ' + Wife_ID[i] + ' have too many children.')
 
-
+        #Married to descendant
+        descends = US17(Husband_ID[i], Wife_ID[i], i)
+        if(descends!=None):
+          MarriedDescendant.append(descends)
         #Siblings should not marry
         if(US18(Husband_ID[i], Wife_ID[i])):
           Siblings.append("Error US18 "+ Husband_Name[i] + "(" + Husband_ID[i] + ") and " + Wife_Name[i] + "(" +
@@ -398,6 +476,14 @@ def main():
         gendererror = US21(Husband_ID[i], Wife_ID[i], i)
         if(gendererror!=None):
           WrongGender.append(gendererror)
+        #Check for multiple births
+        multiplebirths = US32(Children[i])
+        if(multiplebirths!=None):
+          MultipleBirth.append(multiplebirths)
+        #Check marriage age difference
+        double_age = US34(Husband_ID[i], Wife_ID[i], marrydate, i)
+        if(double_age!=None):
+          AgeGap.append(double_age)
         
         #Write tables to Output.txt
         file1 = open("Output.txt", "w")
@@ -405,17 +491,38 @@ def main():
         file1.write("{}\n".format(Individuals))
         file1.write("Families\n")
         file1.write("{}".format(Families))
-        #list = convertDate(Birthday[1])
+        #US01
         file1.write("\n{}".format(DateAfterToday))
+        #US02
         file1.write("\n{}".format(MarrbeforeBirth))
+        #US03
         file1.write("\n{}".format(lst_US03))
+        #US04
         file1.write("\n{}".format(MarriageAfterDivorce))
+        #US05
         file1.write("\n{}".format(MarryAfterDeath))
+        #US06
         file1.write("\n{}".format(DivorcedAfterDeath))
+        #US07
+        file1.write("\n{}".format(OlderThan150))
+        #US15
+        file1.write("\n{}".format(TooManySiblings))
+        #US16
         file1.write("\n{}".format(MalesName))
-        file1.write("\n{}".format(MarriageToChildren))
+        #US17
+        file1.write("\n{}".format(MarriedDescendant))
+        #US18
         file1.write("\n{}".format(Siblings))
+        #US21
         file1.write("\n{}".format(WrongGender))
+        #US31
+        file1.write("\n{}".format(ThirtyAndSingle))
+        #US32
+        file1.write("\n{}".format(MultipleBirth))
+        #US33
+        file1.write("\n{}".format(Orphan))
+        #US34
+        file1.write("\n{}".format(AgeGap))
 
 if __name__=="__main__":
     main()

@@ -319,15 +319,6 @@
 1 BIRT
 2 DATE 30 MAY 2005
 1 FAMC @F9@
-0 @I34@ INDI
-1 NAME Orphana Shtrahman
-2 GIVN Orphana
-2 SURN Shtrahman
-2 _MARNM Shtrahman
-1 SEX F
-1 BIRT
-2 DATE 30 MAY 2005
-1 FAMC @F9@
 0 @I35@ INDI
 1 NAME Lonely Kogan
 2 GIVN Lonely
@@ -335,7 +326,7 @@
 2 _MARNM Kogan
 1 SEX M
 1 BIRT
-2 DATE 6 JUL 1972
+2 DATE 5 AUG 1978
 1 FAMC @F4@
 0 @I36@ INDI
 1 NAME Lonely Shtrahman
