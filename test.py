@@ -312,16 +312,16 @@ class TestStringMethods(unittest.TestCase):
         result = US42(Date("16 JUL 2022"))
         self.assertEqual(result, True)
     def test_US42_2(self):
-        result = US42(Date("16 JUL 2022"))
-        self.assertEqual(result, True)
+        result = US42(Date("32 JUL 2022"))
+        self.assertEqual(result, False)
     def test_US42_3(self):
-        result = US42(Date("16 JUL 2022"))
-        self.assertEqual(result, True)
+        result = US42(Date("35 JUL 2022"))
+        self.assertEqual(result, False)
     def test_US42_4(self):
-        result = US42(Date("16 JUL 2022"))
-        self.assertEqual(result, True)
+        result = US42(Date("16 JUL 2023"))
+        self.assertEqual(result, False)
     def test_US42_5(self):
-        result = US42(Date("16 JUL 2022"))
+        result = US42(Date("7 JUL 1995"))
         self.assertEqual(result, True)
 
 if __name__ == '__main__':
