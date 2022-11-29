@@ -290,6 +290,26 @@ class TestStringMethods(unittest.TestCase):
         result = US34(Husband_ID[2], Wife_ID[2], Date(Married[2]), 2)
         self.assertEqual(result, None)
 
+    def test_US35_1(self):
+        result = US35(Date("16 JUL 2022"))
+        self.assertEqual(result, False)
+
+    def test_US35_2(self):
+        result = US35(Date("16 NOV 2022"))
+        self.assertEqual(result, False)
+
+    def test_US36_1(self):
+        result = US36(Date("16 JUL 2022"))
+        self.assertEqual(result, False)
+
+    def test_US36_2(self):
+        result = US36(Date("16 JUL 2022"))
+        self.assertEqual(result, False)
+
+    def test_US39_1(self):
+        result = US39(Date("16 NOV 2022"))
+        self.assertEqual(result, False)
+
     #Tests for user story 39
     def test_US39_1(self):
         result = US39(Date("16 JUL 2022"))

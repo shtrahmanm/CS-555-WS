@@ -210,6 +210,22 @@ def US34(husband_id, wife_id,marriage_date, i):
     return "Error US34 "+ Wife_Name[i] + "(" + str(Wmarr_age) + ") was more than double the age of " + Husband_Name[i] + "(" +\
       str(Hmarr_age) + ") at the time of marriage."
   return None
+
+def US35(birthdate):
+  testDate = date(2020, birthdate.month, birthdate.day)
+  today = date(2020, date.today().month, date.today().day)
+  delta = testDate - today
+
+  return (0>delta.days>=30)
+
+#List recent deaths
+def US36(deathdate):
+  testDate = date(2020, deathdate.month, deathdate.day)
+  today = date(2020, date.today().month, date.today().day)
+  delta = testDate - today
+
+  return (0>delta.days>=30)
+
 #List Anniversaries that will occur in the next 30 days
 def US39(tdate):
   testDate = date(2020, tdate.month, tdate.day)
@@ -412,6 +428,8 @@ def main():
     AliveAndMarried = []
     UpcomingAnniversaries = []
     IllegitimateDates = []
+    recentBirths = []
+    recentDeaths = []
     today = datetime.datetime.now()
 
     for i in range(len(idi)):
@@ -424,6 +442,8 @@ def main():
             deathdate = Date(Death[i])
             if (US01(deathdate)):
                 DateAfterToday.append('Error US01 Death Date ' + Death[i] + ' happens after today')
+            if (US36(deathdate)):
+                recentDeaths.append('US36: ' + Name[i] + ' died recently')
 
         if(US07(Age[i])):
           OlderThan150.append('Error US07 Age of ' + Name[i] + ' is greater than 150')
@@ -442,6 +462,9 @@ def main():
 
         if(US30(i)):
           AliveAndMarried.append('US30: ' + Name[i] + ' is alive and married.')
+
+        if(US35(birthdate)):
+          recentBirths.append('US35: ' + Name[i] + ' was born recently.')
 
         if(Birthday[i]!='N/A'):
           if(not US42(Date(Birthday[i]))):
@@ -600,6 +623,13 @@ def main():
     file1.write("\n{}".format(Orphan))
     #US34
     file1.write("\n{}".format(AgeGap))
+
+    #US35
+    file1.write("\n{}".format(recentBirths))
+
+    #US36
+    file1.write("\n{}".format(recentDeaths))
+
     #US39
     file1.write("\n{}".format(UpcomingAnniversaries))
     #US42
