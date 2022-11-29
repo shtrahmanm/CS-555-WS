@@ -6,7 +6,7 @@ Individuals
 |  @I2@ |   Lana Shtrahman   |   F    | 12 MAR 1976 |  46 |  True |    N/A     |  @F3@ |  @F1@  |
 |  @I3@ |   Matthew Shtra    |   M    |  1 NOV 2001 |  -2 | False | 4 MAY 2000 |  @F1@ |  N/A   |
 |  @I4@ |  Emily Shtrahman   |   F    | 19 AUG 2023 |  -1 |  True |    N/A     |  @F1@ |  N/A   |
-|  @I5@ |  Nison Shaknovsky  |   M    | 10 NOV 1946 |  75 |  True |    N/A     |  N/A  |  @F3@  |
+|  @I5@ |  Nison Shaknovsky  |   M    | 10 NOV 1946 |  76 |  True |    N/A     |  N/A  |  @F3@  |
 |  @I6@ |  Sonia Shaknovsky  |   F    |  8 JUL 1951 |  71 |  True |    N/A     |  N/A  |  @F4@  |
 |  @I7@ |  Jacob Shtrahman   |   M    |  2 MAR 1945 |  77 |  True |    N/A     |  N/A  |  @F2@  |
 |  @I8@ | Isabella Shtrahman |   F    |  6 JUL 1800 | 222 |  True |    N/A     |  N/A  |  @F2@  |
@@ -16,10 +16,10 @@ Individuals
 | @I12@ |    Elina Revko     |   F    | 15 JUL 1969 |  53 |  True |    N/A     |  @F2@ |  @F7@  |
 | @I13@ |   Gardner Revko    |   M    |  6 MAY 1982 |  40 |  True |    N/A     |  @F7@ |  @F6@  |
 | @I14@ |     Igor Revko     |   M    | 10 APR 1967 |  13 | False | 2 MAY 1980 |  N/A  |  @F7@  |
-| @I15@ |    Grant Kogan     |   M    | 17 NOV 1995 |  26 |  True |    N/A     |  @F5@ |  @F8@  |
+| @I15@ |    Grant Kogan     |   M    | 17 NOV 1995 |  27 |  True |    N/A     |  @F5@ |  @F8@  |
 | @I16@ |   Pamela Trisha    |   M    |  2 FEB 1997 |  25 |  True |    N/A     |  N/A  |  @F8@  |
 | @I17@ |   Mart Shtrahman   |   M    |  5 JUN 2006 |  16 |  True |    N/A     |  @F1@ |  N/A   |
-| @I18@ |   Malt Shtrahman   |   M    |  3 NOV 2005 |  16 |  True |    N/A     |  @F1@ |  N/A   |
+| @I18@ |   Malt Shtrahman   |   M    |  3 NOV 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I19@ |   Mast Shtrahman   |   M    |  5 JUL 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I20@ |   Crab Shtrahman   |   M    |  2 APR 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
 | @I21@ |   Slab Shtrahman   |   M    |  1 JAN 2005 |  17 |  True |    N/A     |  @F1@ |  N/A   |
@@ -70,3 +70,5 @@ Families
 ['US30: Edward Shtrahman is alive and married.', 'US30: Lana Shtrahman is alive and married.', 'US30: Nison Shaknovsky is alive and married.', 'US30: Sonia Shaknovsky is alive and married.', 'US30: Jacob Shtrahman is alive and married.', 'US30: Isabella Shtrahman is alive and married.', 'US30: Boris Kogan is alive and married.', 'US30: Janette Kogan is alive and married.', 'US30: Elina Revko is alive and married.', 'US30: Gardner Revko is alive and married.', 'US30: Grant Kogan is alive and married.', 'US30: Pamela Trisha is alive and married.']
 ['US33: Orphan Shtrahman(@I33@) is an orphaned child.', 'US33: Orphan Shtrahman(@I33@) is an orphaned child.']
 ['Error US34 Isabella Shtrahman(167) was more than double the age of Jacob Shtrahman(23) at the time of marriage.', 'Error US34 Boris Kogan(94) was more than double the age of Janette Kogan(21) at the time of marriage.', 'Error US34 Elina Revko(-3) was more than double the age of Igor Revko(-1) at the time of marriage.']
+['Warning! US39: Upcoming anniversary for @F4@']
+['Error US39: Birthdate 19 AUG 2023 for individual @I4@ is illegitimate.', 'Error US39: Divorce date 1 OCT 2024 for family @F1@ is illegitimate.']
