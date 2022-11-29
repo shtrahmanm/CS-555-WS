@@ -71,4 +71,4 @@ Families
 ['US33: Orphan Shtrahman(@I33@) is an orphaned child.', 'US33: Orphan Shtrahman(@I33@) is an orphaned child.']
 ['Error US34 Isabella Shtrahman(167) was more than double the age of Jacob Shtrahman(23) at the time of marriage.', 'Error US34 Boris Kogan(94) was more than double the age of Janette Kogan(21) at the time of marriage.', 'Error US34 Elina Revko(-3) was more than double the age of Igor Revko(-1) at the time of marriage.']
 ['Warning! US39: Upcoming anniversary for @F4@']
-['Error US39: Birthdate 19 AUG 2023 for individual @I4@ is illegitimate.', 'Error US39: Divorce date 1 OCT 2024 for family @F1@ is illegitimate.']
+['Error US42: Birthdate 19 AUG 2023 for individual @I4@ is illegitimate.', 'Error US42: Divorce date 1 OCT 2024 for family @F1@ is illegitimate.']

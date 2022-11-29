@@ -445,10 +445,10 @@ def main():
 
         if(Birthday[i]!='N/A'):
           if(not US42(Date(Birthday[i]))):
-            IllegitimateDates.append("Error US39: Birthdate " + Birthday[i] + " for individual " +idi[i] + " is illegitimate.")
+            IllegitimateDates.append("Error US42: Birthdate " + Birthday[i] + " for individual " +idi[i] + " is illegitimate.")
         if(Death[i]!='N/A'):
           if(not US42(Date(Death[i]))):
-            IllegitimateDates.append("Error US39: Death date " + Death[i] + " for individual " +idi[i] + " is illegitimate.")
+            IllegitimateDates.append("Error US42: Death date " + Death[i] + " for individual " +idi[i] + " is illegitimate.")
 
     for i in range(len(idf)):
         #date of marriage converted to usable format
@@ -551,10 +551,10 @@ def main():
         #Check for illegitimate dates
         if(Married[i]!='N/A'):
           if(not US42(Date(Married[i]))):
-            IllegitimateDates.append("Error US39: Marriage date " + Married[i] + " for family " +idf[i] + " is illegitimate.")
+            IllegitimateDates.append("Error US42: Marriage date " + Married[i] + " for family " +idf[i] + " is illegitimate.")
         if(Divorced[i]!='N/A'):
           if(not US42(Date(Divorced[i]))):
-            IllegitimateDates.append("Error US39: Divorce date " + Divorced[i] + " for family " +idf[i] + " is illegitimate.")
+            IllegitimateDates.append("Error US42: Divorce date " + Divorced[i] + " for family " +idf[i] + " is illegitimate.")
     #Write tables to Output.txt
     file1 = open("Output.txt", "w")
     file1.write("Individuals\n")
